@@ -1,6 +1,11 @@
 package com.example.opennews;
 
+import android.util.JsonReader;
 import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,13 +15,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 public class QueryUtils {
 
+    //Make call direct from class name and dont make its objects
     private QueryUtils() {
     }
-
 
 
     //Creating list of objects
@@ -33,11 +39,12 @@ public class QueryUtils {
 
         Log.i("Output",jsonValue);
 
-        return null;
+        List<NewsData> newsList= createFeatures(jsonValue);
+
+        return newsList;
 
 
     }
-
 
     //Creating URL object
     private static URL createURL(String requestUrl) {
@@ -70,7 +77,6 @@ public class QueryUtils {
 
             if (urlConnection.getResponseCode() == 200) {
                 // Sucessfull response
-
                 inputStream = urlConnection.getInputStream();
                 // To convert stream of string into readable form
                 jsonValue = convertStream(inputStream);
@@ -104,6 +110,41 @@ public class QueryUtils {
             }
         }
         return output.toString();
+
+    }
+
+    //Creating List of objects of extracted features
+    private static List<NewsData> createFeatures(String jsonValue){
+
+
+        if(jsonValue==null){
+            return null;
+        }
+
+        ArrayList<NewsData> arrayList=new ArrayList<>();
+
+
+        try {
+            JSONObject jsonObject=new JSONObject(jsonValue);
+            JSONArray jsonArray=jsonObject.getJSONArray("articles");
+
+            for(int i=0;i< jsonArray.length();i++){
+                JSONObject jsonChild=jsonArray.getJSONObject(i);
+                String title=jsonChild.getString("title");
+                String description=jsonChild.getString("description");
+                NewsData newsData=new NewsData(title,description);
+
+                arrayList.add(newsData);
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+        }
+
+        return  arrayList;
+
 
     }
 

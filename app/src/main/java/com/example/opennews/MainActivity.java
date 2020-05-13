@@ -18,6 +18,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        QueryUtils.fetchNewsData("http://newsapi.org/v2/top-headlines?country=in&apiKey=665814a9b6bc469cb9d95218a9dedb04");
+        QueryUtils.fetchNewsData("https://newsapi.org/v2/top-headlines?country=in&apiKey=665814a9b6bc469cb9d95218a9dedb04");
     }
 }
