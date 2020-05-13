@@ -2,24 +2,23 @@ package com.example.opennewsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.os.AsyncTask;
+import android.app.LoaderManager;
+
+import android.content.Loader;
+
 import android.os.Bundle;
-import android.util.JsonReader;
-import android.util.Log;
+
 import android.widget.ListView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<NewsData>> {
     private NewsAdapter newsAdapter;
     private static final String REQUEST_URL = "http://newsapi.org/v2/top-headlines?country=in&apiKey=665814a9b6bc469cb9d95218a9dedb04";
-
+    private static final int News_LOADER_ID = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,35 +28,38 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.list_view);
         listView.setAdapter(newsAdapter);
 
-        NewsAsyncTask task = new NewsAsyncTask();
-        task.execute(REQUEST_URL);
+
+        LoaderManager loaderManager = getLoaderManager();
+        loaderManager.initLoader(0,null,MainActivity.this).forceLoad();
 
     }
 
-    private class NewsAsyncTask extends AsyncTask<String, Void, List<NewsData>> {
+    //Loaders override methods below
+    @Override
+    public Loader<List<NewsData>> onCreateLoader(int i, Bundle bundle) {
+        // Create a new loader for the given URL
+        return new NewsLoader(this, REQUEST_URL);
+    }
 
+    @Override
+    public void onLoadFinished(Loader<List<NewsData>> loader, List<NewsData> earthquakes) {
+        // Clear the adapter of previous earthquake data
+        newsAdapter.clear();
 
-        @Override
-        protected List<NewsData> doInBackground(String... urls) {
-            // Don't perform the request if there are no URLs, or the first URL is null.
-            if (urls.length < 1 || urls[0] == null) {
-                return null;
-            }
-
-            List<NewsData> result = QueryUtils.fetchNewsData(urls[0]);
-            return result;
-        }
-
-
-        @Override
-        protected void onPostExecute(List<NewsData> data) {
-            newsAdapter.clear();
-
-            if (data != null && !data.isEmpty()) {
-                newsAdapter.addAll(data);
-            }
+        // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
+        // data set. This will trigger the ListView to update.
+        if (earthquakes != null && !earthquakes.isEmpty()) {
+            newsAdapter.addAll(earthquakes);
         }
     }
+
+    @Override
+    public void onLoaderReset(Loader<List<NewsData>> loader) {
+        // Loader reset, so we can clear out our existing data.
+        newsAdapter.clear();
+    }
+
+
 }
 
 
