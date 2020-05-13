@@ -1,4 +1,4 @@
-package com.example.opennews;
+package com.example.opennewsapp;
 
 public class NewsData {
 
@@ -16,6 +16,4 @@ public class NewsData {
     public String getDescription(){
         return mDescription;
     }
-
-
 }

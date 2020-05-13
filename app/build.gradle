@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     buildToolsVersion "29.0.3"
     defaultConfig {
-        applicationId "com.example.opennews"
+        applicationId "com.example.opennewsapp"
         minSdkVersion 25
         targetSdkVersion 28
         versionCode 1
