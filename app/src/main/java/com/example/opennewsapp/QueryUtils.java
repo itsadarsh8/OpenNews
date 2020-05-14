@@ -109,12 +109,12 @@ public class QueryUtils {
                 String date = dateTime[0];
                 String time = dateTime[1];
                 time = time.substring(0, 5);
-                /*String author = "";
+                String author = "";
                 JSONArray alltags = jsonObject.getJSONArray("tags");
                 if (alltags != null) {
-                    for (int j = 0; j < alltags.length(); j++) {
-                        JSONObject tagsobject= alltags.getJSONObject(j);
-                         author= tagsobject.optString("contributor");
+                    for (int k = 0; k < alltags.length(); k++) {
+                        JSONObject tagsobject= alltags.getJSONObject(k);
+                         author= tagsobject.getString("webTitle");
                     }
                     if(author==null){
                         author="No Author";
@@ -122,16 +122,16 @@ public class QueryUtils {
                 }
                 else{
                     author="No Author";
-                }*/
+                }
                 Log.i(LOG_TAG_output, time);
                 Log.i(LOG_TAG_output, date);
                 Log.i(LOG_TAG_output, title);
                 Log.i(LOG_TAG_output, webUrl);
-          //      Log.i(LOG_TAG_output, author);
+                Log.i(LOG_TAG_output, author);
                 Log.i(LOG_TAG_output, sectionName);
 
 
-                NewsData newsData = new NewsData(title, webUrl, sectionName, date, time);
+                NewsData newsData = new NewsData(title, webUrl, sectionName, date, time, author);
                 arrayList.add(newsData);
             }
 

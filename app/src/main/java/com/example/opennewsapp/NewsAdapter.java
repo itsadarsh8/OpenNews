@@ -42,8 +42,8 @@ public class NewsAdapter extends ArrayAdapter<NewsData> {
         TextView timeView=currentListView.findViewById(R.id.time);
         timeView.setText(newsData.getTime());
 
-
-
+        TextView authorView=currentListView.findViewById(R.id.author);
+        authorView.setText("~"+newsData.getAuthor());
 
         return currentListView;
 

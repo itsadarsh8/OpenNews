@@ -25,7 +25,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<NewsData>> {
     private NewsAdapter newsAdapter;
-    private static final String REQUEST_URL = "http://content.guardianapis.com/search?q=debates&api-key=test";
+    private static final String REQUEST_URL = "http://content.guardianapis.com/search?show-tags=contributor&api-key=47a78317-d9b5-4c11-b2f8-4871d1aefd55";
     private TextView emptyTextView;
     private ProgressBar progressBar;
 

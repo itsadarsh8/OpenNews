@@ -20,7 +20,7 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:textSize="32sp"
-        tools:text="No News Found" />
+        tools:text="No New Found" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
