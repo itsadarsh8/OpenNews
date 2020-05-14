@@ -94,17 +94,44 @@ public class QueryUtils {
         ArrayList<NewsData> arrayList = new ArrayList<>();
         try {
             JSONObject baseJsonResponse = new JSONObject(newsJson);
-            JSONArray jsonArray = baseJsonResponse.getJSONArray("articles");
+            JSONObject response = baseJsonResponse.getJSONObject("response");
+            JSONArray jsonArray = response.getJSONArray("results");
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String title = jsonObject.getString("title");
-                String description = jsonObject.getString("description");
 
+                String sectionName = jsonObject.getString("sectionName");
+                String title = jsonObject.getString("webTitle");
+                String webUrl = jsonObject.getString("webUrl");
+                String MergeDate = jsonObject.optString("webPublicationDate");
+
+                String[] dateTime = MergeDate.split("T", 2);
+                String date = dateTime[0];
+                String time = dateTime[1];
+                time = time.substring(0, 5);
+                /*String author = "";
+                JSONArray alltags = jsonObject.getJSONArray("tags");
+                if (alltags != null) {
+                    for (int j = 0; j < alltags.length(); j++) {
+                        JSONObject tagsobject= alltags.getJSONObject(j);
+                         author= tagsobject.optString("contributor");
+                    }
+                    if(author==null){
+                        author="No Author";
+                    }
+                }
+                else{
+                    author="No Author";
+                }*/
+                Log.i(LOG_TAG_output, time);
+                Log.i(LOG_TAG_output, date);
                 Log.i(LOG_TAG_output, title);
-                Log.i(LOG_TAG_output, description);
+                Log.i(LOG_TAG_output, webUrl);
+          //      Log.i(LOG_TAG_output, author);
+                Log.i(LOG_TAG_output, sectionName);
 
-                NewsData newsData = new NewsData(title, description);
+
+                NewsData newsData = new NewsData(title, webUrl, sectionName, date, time);
                 arrayList.add(newsData);
             }
 

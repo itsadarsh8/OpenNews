@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -34,8 +33,17 @@ public class NewsAdapter extends ArrayAdapter<NewsData> {
         TextView titleView=currentListView.findViewById(R.id.title);
         titleView.setText(newsData.getTitle());
 
-        TextView descriptionView=currentListView.findViewById(R.id.description);
-        descriptionView.setText(newsData.getDescription());
+        TextView sectionNameView=currentListView.findViewById(R.id.sectionName);
+        sectionNameView.setText(newsData.getSectionName());
+
+        TextView dateView=currentListView.findViewById(R.id.date);
+        dateView.setText(newsData.getDate());
+
+        TextView timeView=currentListView.findViewById(R.id.time);
+        timeView.setText(newsData.getTime());
+
+
+
 
         return currentListView;
 
