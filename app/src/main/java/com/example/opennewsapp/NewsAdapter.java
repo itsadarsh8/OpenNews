@@ -21,29 +21,29 @@ public class NewsAdapter extends ArrayAdapter<NewsData> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View currentListView=convertView;
+        View currentListView = convertView;
 
-        if(currentListView==null){
-            currentListView= LayoutInflater.from(getContext()).inflate(
+        if (currentListView == null) {
+            currentListView = LayoutInflater.from(getContext()).inflate(
                     R.layout.list_structure, parent, false);
         }
 
-        NewsData newsData=getItem(position);
+        NewsData newsData = getItem(position);
 
-        TextView titleView=currentListView.findViewById(R.id.title);
+        TextView titleView = currentListView.findViewById(R.id.title);
         titleView.setText(newsData.getTitle());
 
-        TextView sectionNameView=currentListView.findViewById(R.id.sectionName);
+        TextView sectionNameView = currentListView.findViewById(R.id.sectionName);
         sectionNameView.setText(newsData.getSectionName());
 
-        TextView dateView=currentListView.findViewById(R.id.date);
+        TextView dateView = currentListView.findViewById(R.id.date);
         dateView.setText(newsData.getDate());
 
-        TextView timeView=currentListView.findViewById(R.id.time);
+        TextView timeView = currentListView.findViewById(R.id.time);
         timeView.setText(newsData.getTime());
 
-        TextView authorView=currentListView.findViewById(R.id.author);
-        authorView.setText("~"+newsData.getAuthor());
+        TextView authorView = currentListView.findViewById(R.id.author);
+        authorView.setText("~" + newsData.getAuthor());
 
         return currentListView;
 

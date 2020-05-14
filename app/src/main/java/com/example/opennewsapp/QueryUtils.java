@@ -1,7 +1,5 @@
 package com.example.opennewsapp;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -41,7 +39,7 @@ public class QueryUtils {
     private static String makeHttpRequest(URL url) throws IOException {
         String jsonResponse = "";
 
-        // If the URL is null, then return early.
+
         if (url == null) {
             return jsonResponse;
         }
@@ -50,13 +48,12 @@ public class QueryUtils {
         InputStream inputStream = null;
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setReadTimeout(10000 /* milliseconds */);
-            urlConnection.setConnectTimeout(15000 /* milliseconds */);
+            urlConnection.setReadTimeout(10000 );
+            urlConnection.setConnectTimeout(15000);
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
-            // If the request was successful (response code 200),
-            // then read the input stream and parse the response.
+
             if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
@@ -105,7 +102,7 @@ public class QueryUtils {
                 String webUrl = jsonObject.getString("webUrl");
                 String MergeDate = jsonObject.optString("webPublicationDate");
 
-                String[] dateTime = MergeDate.split("T", 2);
+                String[] dateTime = MergeDate.split("T");
                 String date = dateTime[0];
                 String time = dateTime[1];
                 time = time.substring(0, 5);
@@ -113,15 +110,14 @@ public class QueryUtils {
                 JSONArray alltags = jsonObject.getJSONArray("tags");
                 if (alltags != null) {
                     for (int k = 0; k < alltags.length(); k++) {
-                        JSONObject tagsobject= alltags.getJSONObject(k);
-                         author= tagsobject.getString("webTitle");
+                        JSONObject tagsobject = alltags.getJSONObject(k);
+                        author = tagsobject.getString("webTitle");
                     }
-                    if(author==null){
-                        author="No Author";
+                    if (author == null) {
+                        author = "No Author";
                     }
-                }
-                else{
-                    author="No Author";
+                } else {
+                    author = "No Author";
                 }
                 Log.i(LOG_TAG_output, time);
                 Log.i(LOG_TAG_output, date);
@@ -142,10 +138,9 @@ public class QueryUtils {
     }
 
     public static List<NewsData> fetchNewsData(String requestUrl) {
-        // Create URL object
+
         URL url = createUrl(requestUrl);
 
-        // Perform HTTP request to the URL and receive a JSON response back
         String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);

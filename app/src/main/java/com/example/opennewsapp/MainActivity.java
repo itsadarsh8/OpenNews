@@ -3,11 +3,9 @@ package com.example.opennewsapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.LoaderManager;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
-
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -74,19 +72,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     //Loaders override methods below
     @Override
     public Loader<List<NewsData>> onCreateLoader(int i, Bundle bundle) {
-        // Create a new loader for the given URL
+
         return new NewsLoader(this, REQUEST_URL);
     }
 
     @Override
     public void onLoadFinished(Loader<List<NewsData>> loader, List<NewsData> earthquakes) {
-        // Clear the adapter of previous earthquake data
+
         newsAdapter.clear();
         progressBar.setVisibility(View.GONE);
         emptyTextView.setText("No News found");
 
-        // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
-        // data set. This will trigger the ListView to update.
+
         if (earthquakes != null && !earthquakes.isEmpty()) {
             newsAdapter.addAll(earthquakes);
         }
@@ -94,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoaderReset(Loader<List<NewsData>> loader) {
-        // Loader reset, so we can clear out our existing data.
+
         newsAdapter.clear();
     }
 
