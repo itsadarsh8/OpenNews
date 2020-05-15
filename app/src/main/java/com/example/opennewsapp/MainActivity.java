@@ -23,7 +23,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<NewsData>> {
     private NewsAdapter newsAdapter;
-    private static final String REQUEST_URL = "http://content.guardianapis.com/search?show-tags=contributor&api-key=47a78317-d9b5-4c11-b2f8-4871d1aefd55";
+    private static final String REQUEST_URL = "http://content.guardianapis.com/search";
     private TextView emptyTextView;
     private ProgressBar progressBar;
 
@@ -72,8 +72,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     //Loaders override methods below
     @Override
     public Loader<List<NewsData>> onCreateLoader(int i, Bundle bundle) {
+        Uri base = Uri.parse(REQUEST_URL);
 
-        return new NewsLoader(this, REQUEST_URL);
+        Uri.Builder uriBuilder = base.buildUpon();
+
+        uriBuilder.appendQueryParameter("show-tags", "contributor");
+        uriBuilder.appendQueryParameter("api-key", "test");
+
+        return new NewsLoader(this, uriBuilder.toString());
     }
 
     @Override
